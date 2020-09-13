@@ -1,7 +1,7 @@
 # ValeriyTyutyunnik_infra
 ValeriyTyutyunnik Infra repository
 
-## Задание к Лекции 5
+## Задание к Лекции 5 (ДЗ №3)
 
 bastion_IP = 84.201.159.70
 someinternalhost_IP = 10.130.0.12
