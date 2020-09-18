@@ -40,3 +40,25 @@ Host someinternalhost
   Port 22
   ProxyJump bastion
 ```
+
+## Задание к лекции 6 (ДЗ №4)
+testapp_IP = 178.154.224.76
+testapp_port = 9292
+
+### Доп.задание - создание ВМ, используя скрипт с метаданными
+
+Примечание: ВМ создается прерываемая (ключ --preemptible).
+
+```
+yc compute instance create \
+  --name reddit-app \
+  --hostname reddit-app \
+  --memory=4 \
+  --create-boot-disk image-folder-id=standard-images,image-family=ubuntu-1604-lts,size=10GB \
+  --network-interface subnet-name=default-ru-central1-a,nat-ip-version=ipv4 \
+  --metadata serial-port-enable=1 \
+  --preemptible \
+  --metadata-from-file user-data=./reddit_app_metadata.yaml
+```
+
+[doc: cloud config examples](https://cloudinit.readthedocs.io/en/latest/topics/examples.html)
