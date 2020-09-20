@@ -1,0 +1,50 @@
+#cloud-config
+
+disable_root: true
+timezone: Europe/Moscow
+repo_update: true
+repo_upgrade: true
+apt:
+  preserve_sources_list: true
+
+users:
+  - name: appuser
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    shell: /bin/bash
+    ssh-authorized-keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCZpZ3tjY759gk8x8Ok0mQdaQMe+EapUFtjisW6jYIK02rmTRujkRyB3ysDtLm3SRDV90Vqh633nJdr7xZPcqmE5LEZifpKiMP1wgXPb8B8+8JB6xNxCnPC2wN1vGFTOpFFsG/YFfaBDA73q8zaJfu6tLyT15R0Sbm3kVC6xHHHUWj7md8QXGsHMwPyABlH2kTHrbFBy4Og5D53ipoMeh176MYrfYuEVNxj+MQkGnHcePp9eNpxlhDPheM24xroQvR/7Liywn3hvNU0VU+u9sxul/fnGdqn4AMtf2zBNNAa1RRlmHIFa7MbltKLmLe+lFq8VaFJUgWXtlRC09yzNwHKmeO6r72AGRmlUG8mk6QKlheokxW9QpSmYsJLAn24J3jKLH1x6bl1FOyAD7TA8UmzzpenBT9OTDO4c/0j2c09Fg/quVx919/1J3mRNWE5gjV/MqF6QyUdcmM84CQ1VmA+yfDgLnyfjXnSvnCqSvOSwyzF8ExlakchI1/V1cZw3S0= appuser
+
+packages:
+  - git
+  - ruby-full
+  - ruby-bundler
+  - build-essential
+  - apt-transport-https
+  - ca-certificates
+
+# Вообще тут забавно получается. Пользователь appuser по логам создается в намного позже остальных действий,
+# и никак не сменить в его домашнем каталоге владельца:группу с рута на appuser в этой конигурации.
+# А еще гит склонирует репозиторий прямо в корень, если ему путь не указать.
+write_files:
+  - path: /home/appuser/install_mongodb.sh
+    permissions: "0744"
+    content: |
+      #!/bin/bash
+      wget -qO - https://www.mongodb.org/static/pgp/server-4.2.asc | apt-key add -
+      echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/4.2 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-4.2.list
+      apt-get update
+      apt-get install -y mongodb-org
+      systemctl start mongod
+      systemctl enable mongod
+  - path: /home/appuser/deploy.sh
+    permissions: "0744"
+    content: |
+      #!/bin/bash
+      git clone -b monolith https://github.com/express42/reddit.git /home/appuser/reddit
+      cd /home/appuser/reddit
+      bundle install
+      puma -d
+
+runcmd:
+  - /home/appuser/install_mongodb.sh
+  - /home/appuser/deploy.sh
