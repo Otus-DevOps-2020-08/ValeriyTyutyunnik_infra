@@ -62,3 +62,13 @@ yc compute instance create \
 ```
 
 [doc: cloud config examples](https://cloudinit.readthedocs.io/en/latest/topics/examples.html)
+
+## Задание к лекции 7 (ДЗ №5)
+
+1. Сделаны packer скрипты для создания Fry и Bake образов для приложения reddit
+2. Проверено создание ВМ из созданных образов
+```
+packer build -var-file=variables.json ./ubuntu16.json
+packer build -var-file=variables.json ./immutable.json
+```
+3. Скрипт создание ВМ из Bake-образа через YC CLI /config-scripts/create-reddit-vm.sh
