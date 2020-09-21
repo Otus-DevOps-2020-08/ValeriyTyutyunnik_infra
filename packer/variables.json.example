@@ -1,0 +1,9 @@
+{
+  "v_folder_id": "<folder_id>",
+  "v_service_account_key_file": "key.json",
+  "v_source_image_family": "ubuntu-1604-lts",
+  "v_platform_id": "standard-v1",
+  "v_ssh_username": "user",
+  "v_preemtible": "false",
+  "v_zone": "ru-central1-a"
+}
