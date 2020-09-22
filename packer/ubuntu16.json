@@ -1,0 +1,25 @@
+{
+    "builders": [
+        {
+            "type": "yandex",
+            "use_ipv4_nat": "true",
+            "service_account_key_file": "{{ user `v_service_account_key_file` }}",
+            "folder_id": "{{ user `v_folder_id` }}",
+            "source_image_family": "{{ user `v_source_image_family` }}",
+            "image_family": "reddit-base",
+            "image_name": "reddit-base-{{timestamp}}",
+            "ssh_username": "{{ user `v_ssh_username` }}",
+            "platform_id": "{{ user `v_platform_id` }}",
+            "preemptible": "{{ user `v_preemtible` }}",
+            "zone": "{{ user `v_zone` }}"
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "shell",
+            "scripts": ["scripts/install_ruby.sh", "scripts/install_mongodb.sh"],
+            "execute_command": "sudo {{.Path}}",
+            "pause_before": "15s"
+        }
+    ]
+}
