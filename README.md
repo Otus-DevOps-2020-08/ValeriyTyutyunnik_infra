@@ -72,3 +72,9 @@ packer build -var-file=variables.json ./ubuntu16.json
 packer build -var-file=variables.json ./immutable.json
 ```
 3. Скрипт создание ВМ из Bake-образа через YC CLI /config-scripts/create-reddit-vm.sh
+
+## terraform-1 (ДЗ №6)
+Создана и проверена конфигурация terraform с развертыванием 2-ух инстансов приложения и балансером
+
+[doc: terraform configuration](https://www.terraform.io/docs/configuration/resources.html)
+[doc: terraform yandex provider](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs)
