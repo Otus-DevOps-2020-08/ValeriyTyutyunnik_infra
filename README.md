@@ -78,3 +78,12 @@ packer build -var-file=variables.json ./immutable.json
 
 [doc: terraform configuration](https://www.terraform.io/docs/configuration/resources.html)
 [doc: terraform yandex provider](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs)
+
+## teraform-2 (ДЗ №7)
+
+1. Созданы packer образы db и app
+2. Созданы terraform модули app, db, vpc. Модули app и db создаются на основе новых образов packer
+3. Созданы конфигурации stage и prod
+4. В модули db и app добавлены провиженеры для развертывания готового приложения.
+5. Модулем app может быть создано несколько инстансов, которые будут коннетится к одной БД. Проверено - работает)
+6. Создан бакет в облаке и ключ доступа к нему для хранения state файла
