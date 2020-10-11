@@ -25,9 +25,18 @@ resource "yandex_compute_instance" "db" {
     ssh-keys = "ubuntu:${file(var.public_key_path)}"
   }
 
+}
+
+resource "null_resource" "db-provisioner" {
+  count = var.use_provisioner ? 1 : 0 # катать провижинер?
+
+  triggers = {
+    cluster_instance_ids = yandex_compute_instance.db.id
+  }
+
   connection {
     type        = "ssh"
-    host        = self.network_interface.0.nat_ip_address
+    host        = yandex_compute_instance.db.network_interface.0.nat_ip_address
     user        = "ubuntu"
     agent       = false
     private_key = file(var.private_key_path)
@@ -35,8 +44,9 @@ resource "yandex_compute_instance" "db" {
 
   provisioner "remote-exec" {
     inline = [
-      "sudo sed -i -e 's/127.0.0.1/${self.network_interface.0.ip_address}/g' /etc/mongod.conf",
+      "sudo sed -i -e 's/127.0.0.1/${yandex_compute_instance.db.network_interface.0.ip_address}/g' /etc/mongod.conf",
       "sudo systemctl restart mongod"
     ]
   }
+
 }
