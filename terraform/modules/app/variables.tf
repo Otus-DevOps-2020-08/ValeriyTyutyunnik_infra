@@ -24,3 +24,9 @@ variable instance_count {
   type        = number
   default     = 1
 }
+
+variable use_provisioner {
+  description = "False will disable provisioners"
+  type        = bool
+  default     = true
+}

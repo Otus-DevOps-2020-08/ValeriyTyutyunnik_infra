@@ -26,9 +26,18 @@ resource "yandex_compute_instance" "app" {
     ssh-keys = "ubuntu:${file(var.public_key_path)}"
   }
 
+}
+
+resource "null_resource" "app-provisioner" {
+  count = var.use_provisioner ? var.instance_count : 0 # катать провижинер?
+
+  triggers = {
+    cluster_instance_ids = "${join(",", yandex_compute_instance.app.*.id)}"
+  }
+
   connection {
     type        = "ssh"
-    host        = self.network_interface.0.nat_ip_address
+    host        = yandex_compute_instance.app[count.index].network_interface.0.nat_ip_address
     user        = "ubuntu"
     agent       = false
     private_key = file(var.private_key_path)

@@ -3,7 +3,6 @@ import argparse
 import subprocess
 import json
 
-
 parser = argparse.ArgumentParser()
 parser.add_argument("--list", action="store_true")
 args = parser.parse_args()
@@ -21,6 +20,8 @@ if args.list:
         for module in data["values"]["root_module"]["child_modules"]:
             try:
                 for resource in module["resources"]:
+                    if resource["type"] == "null_resource":
+                        continue
                     group_name = resource["name"]
                     values = resource["values"]
                     host_name = values["name"]

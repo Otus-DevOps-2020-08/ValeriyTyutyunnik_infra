@@ -14,3 +14,9 @@ variable public_key_path {
 variable private_key_path {
   description = "Path to the private key used for ssh access"
 }
+
+variable use_provisioner {
+  description = "False will disable provisioner"
+  type        = bool
+  default     = true
+}
