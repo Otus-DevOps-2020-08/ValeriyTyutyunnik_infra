@@ -103,3 +103,18 @@ packer build -var-file=variables.json ./immutable.json
 3. Провижинеры терраформ теперь запускаются по переменной через null-провиженеры, в dynamic-invertory исправлен маленький баг
 4. ansible/app.yml получает ip DB через dynamic-inventory
 5. Создана ansible конфигурация для образов packer. Собрана и проверена инфраструктура из новых образов
+
+## ansible-3 (ДЗ №10)
+
+1. Работа по плану домашки. Перенос ролей из прошлого задания в роли app/db
+2. Описаны окружения stage/prod
+
+```
+# stage
+ansible-playbook playbooks/site.yml --check
+ansible-playbook playbooks/site.yml
+
+# prod
+ansible-playbook -i environments/prod/dynamic-inventory.py playbooks/site.yml --check
+ansible-playbook -i environments/prod/dynamic-inventory.py playbooks/site.yml
+```
