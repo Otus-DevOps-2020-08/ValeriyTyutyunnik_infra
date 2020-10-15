@@ -5,7 +5,7 @@ pwd
 
 #if [ ( $TRAVIS_BRANCH == "master" && $TRAVIS_EVENT_TYPE == "push" ) || $TRAVIS_EVENT_TYPE == "pull_request" ]; then
   for f in play-travis/*_check.sh; do
-    $f
+    docker exec hw-test bash -c '$f'
   done
 #else
 #  echo 'skipping checks';
