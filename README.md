@@ -108,13 +108,24 @@ packer build -var-file=variables.json ./immutable.json
 
 1. Работа по плану домашки. Перенос ролей из прошлого задания в роли app/db
 2. Описаны окружения stage/prod
+3. Создана роль users. Пароли зашифрованы через vault. Проверено, что после накатки роли пользователи есть и пароль подходит
+
+задания со звездочкой:
+
+
+1. Инвентори работате для stage и prod окружений ansible
+2. Муки с [докой тревиса](https://docs.travis-ci.com/user/job-lifecycle/#the-job-lifecycle) и синтаксическими мелочами bash все же привели к результату:
+- Для всех плейбуков ansible запускается линтер
+- Для всех образов packer запускается packer/validate (запуск из корня репозитория)
+- Для stage и prod конфигураций terraform запускается validate и tflint
+
 
 ```
-# stage
+# ansible stage command
 ansible-playbook playbooks/site.yml --check
 ansible-playbook playbooks/site.yml
 
-# prod
+# ansible prod command
 ansible-playbook -i environments/prod/dynamic-inventory.py playbooks/site.yml --check
 ansible-playbook -i environments/prod/dynamic-inventory.py playbooks/site.yml
 ```

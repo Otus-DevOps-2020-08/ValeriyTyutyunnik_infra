@@ -37,7 +37,7 @@
       become: true
       apt:
         pkg: git
-        state: latest
+        state: present
       tags: deploy-tag
 
     - name: Fetch the latest version of application code

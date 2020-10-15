@@ -17,7 +17,7 @@
     "provisioners": [
         {
             "type": "shell",
-            "scripts": ["scripts/install_ruby.sh", "scripts/install_mongodb.sh"],
+            "scripts": ["packer/scripts/install_ruby.sh", "packer/scripts/install_mongodb.sh"],
             "execute_command": "sudo {{.Path}}",
             "pause_before": "15s"
         }
