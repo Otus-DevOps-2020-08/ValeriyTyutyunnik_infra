@@ -1,13 +1,12 @@
 #!/bin/bash
-set -v
 
-echo " === Begin stage validate: =="
+echo " -= terraform stage validate begin =-"
 cd terraform/stage
 terraform init -backend=false
 terraform validate
 tflint
 
-echo " === Begin prod validate: =="
+echo " -= terraform prod validate begin =-"
 cd ../prod
 terraform init -backend=false
 terraform validate

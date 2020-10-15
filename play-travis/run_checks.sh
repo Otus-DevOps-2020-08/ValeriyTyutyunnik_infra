@@ -1,12 +1,9 @@
 #!/bin/bash
-#set -ev
-set -v
-pwd
 
 #if [ ( $TRAVIS_BRANCH == "master" && $TRAVIS_EVENT_TYPE == "push" ) || $TRAVIS_EVENT_TYPE == "pull_request" ]; then
-  for f in play-travis/*_check.sh; do
-    docker exec hw-test bash -c '$f'
-  done
+  docker exec hw-test bash -c './play-travis/ansible_check.sh'
+  docker exec hw-test bash -c './play-travis/packer_check.sh'
+  docker exec hw-test bash -c './play-travis/terraform_check.sh'
 #else
 #  echo 'skipping checks';
 #fi
