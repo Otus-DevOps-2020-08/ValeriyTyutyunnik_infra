@@ -6,3 +6,4 @@ variables.json
 .terraform/
 *.lock.info
 *.retry
+jdauphant.nginx
