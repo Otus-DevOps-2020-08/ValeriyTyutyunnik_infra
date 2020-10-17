@@ -1,0 +1,9 @@
+---
+- name: install python
+  hosts: all
+  become: true
+  tasks:
+    - name: Install python
+      apt:
+        name: python-minimal
+        update_cache: yes
