@@ -7,3 +7,11 @@ variables.json
 *.lock.info
 *.retry
 jdauphant.nginx
+.vagrant/
+*.log
+*.pyc
+.molecule
+.cache
+.pytest_cache
+*.lock
+Pipfile

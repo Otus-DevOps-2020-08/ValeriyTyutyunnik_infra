@@ -1,6 +1,8 @@
 # ValeriyTyutyunnik_infra
 ValeriyTyutyunnik Infra repository
 
+[![Build Status](https://travis-ci.com/Otus-DevOps-2020-08/ValeriyTyutyunnik_infra.svg?branch=master)](https://travis-ci.com/Otus-DevOps-2020-08/ValeriyTyutyunnik_infra)
+
 ## Задание к Лекции 5 (ДЗ №3)
 
 bastion_IP = 84.201.159.70
@@ -128,4 +130,16 @@ ansible-playbook playbooks/site.yml
 # ansible prod command
 ansible-playbook -i environments/prod/dynamic-inventory.py playbooks/site.yml --check
 ansible-playbook -i environments/prod/dynamic-inventory.py playbooks/site.yml
+```
+
+## ansible-4 (ДЗ №11)
+1. Установлен Vagrant. Классная вещь!
+2. Настроен для ролей app и db. Плейбук base.yml в site.yml не включал, т.к. питон итак установлен.
+3. Потестил молекулой роль db. Странно, что от версии к версии разный список поддерживаемых провижинеров, пришлось сначала откатывать 3.х версию и устанавливать 2.22
+4. Настроил использование ролей в пакере. После добавления переменной deploy_user сломался плейбук deploy.yml если катать не через Vagrant. Отправил его в роль app, чтобы не дублировать переменные в окружении и плейбуке с ролью.
+
+```
+- src: https://<repo>.git
+  version: <branch>
+  name: <name>
 ```

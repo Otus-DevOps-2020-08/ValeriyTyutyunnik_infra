@@ -5,5 +5,6 @@
   "v_platform_id": "standard-v1",
   "v_ssh_username": "user",
   "v_preemtible": "false",
-  "v_zone": "ru-central1-a"
+  "v_zone": "ru-central1-a",
+  "pwd": "source_path"
 }
